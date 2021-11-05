@@ -1,0 +1,186 @@
+if game.CoreGui:FindFirstChild("Design") then
+    game.CoreGui:FindFirstChild("Design"):Destroy()   
+end 
+
+
+local UIS = game:GetService("UserInputService")
+
+UIS.InputBegan:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.Delete then
+		if game.CoreGui:FindFirstChild("Design") then
+		    _G.enabled = false
+            game.CoreGui:FindFirstChild("Design"):Destroy()   
+        end 
+	end
+end)
+
+local library = {}
+
+function library:CreateWindow(Name)
+	local Design = Instance.new("ScreenGui")
+	local TopMain = Instance.new("Frame")
+	local Title = Instance.new("TextLabel")
+	local Container = Instance.new("Frame")
+	local UIGridLayout = Instance.new("UIGridLayout")
+    local ToggleVisible = Instance.new("TextButton")
+
+	Design.Name = "Design"
+    Design.Parent = game.CoreGui
+    Design.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    
+    TopMain.Name = "TopMain"
+    TopMain.Parent = Design
+    TopMain.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    TopMain.BorderSizePixel = 0
+    TopMain.Position = UDim2.new(0.243500322, 0, 0.291149676, 0)
+    TopMain.Size = UDim2.new(0, 616, 0, 27)
+    TopMain.Draggable = true
+    TopMain.Active = true
+    
+    Title.Name = "Title"
+    Title.Parent = TopMain
+    Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Title.BackgroundTransparency = 1.000
+    Title.Position = UDim2.new(0.31597811, 0, -0.0329630375, 0)
+    Title.Size = UDim2.new(0, 226, 0, 29)
+    Title.Font = Enum.Font.SourceSansBold
+    Title.TextColor3 = Color3.fromRGB(255, 250, 230)
+    Title.TextSize = 20.000
+    Title.Text = Name
+    
+    Container.Name = "Container"
+    Container.Parent = TopMain
+    Container.BackgroundColor3 = Color3.fromRGB(8, 8, 8)
+    Container.BorderSizePixel = 0
+    Container.ClipsDescendants = true
+    Container.Position = UDim2.new(0, 0, 0.994073927, 0)
+    Container.Size = UDim2.new(0, 616, 0, 313)
+
+	UIGridLayout.Parent = Container
+	UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	UIGridLayout.CellSize = UDim2.new(0, 150, 0, 40)
+
+    ToggleVisible.Name = "ToggleVisible"
+    ToggleVisible.Parent = TopMain
+    ToggleVisible.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleVisible.BackgroundTransparency = 1.000
+    ToggleVisible.BorderSizePixel = 0
+    ToggleVisible.Position = UDim2.new(0.948067904, 0, 0, 0)
+    ToggleVisible.Size = UDim2.new(0, 29, 0, 27)
+    ToggleVisible.Font = Enum.Font.SourceSansBold
+    ToggleVisible.Text = "V"
+    ToggleVisible.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleVisible.TextSize = 14.000
+    ToggleVisible.Rotation = 180
+    ToggleVisible.MouseButton1Click:Connect(function()
+        if toggled then
+            toggled = false
+            Container:TweenSize(UDim2.new(0, 616,0, 313), "InOut", "Linear", 0.1)
+            ToggleVisible.Rotation = 180
+        else
+            toggled = true
+            Container:TweenSize(UDim2.new(0, 616,0, 0), "InOut", "Linear", 0.1)
+            ToggleVisible.Rotation = 0
+        end
+    end)
+
+	local EpicLibrary = {}
+
+	function EpicLibrary:CreateButton(Text, callback)
+        local callback = callback or function() end
+
+		local TextButton = Instance.new("TextButton")
+
+		TextButton.Parent = Container
+		TextButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		TextButton.BorderSizePixel = 0
+		TextButton.Position = UDim2.new(0.770330191, 0, 0.694760561, 0)
+		TextButton.Size = UDim2.new(0, 106, 0, 49)
+		TextButton.Font = Enum.Font.Ubuntu
+		TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextButton.TextSize = 14.000
+		TextButton.Text = Text
+
+        TextButton.MouseButton1Click:Connect(function()
+            pcall(callback)
+        end)    
+	end
+
+	function EpicLibrary:CreateToggle(text, callback)
+		local actions = {}
+		local enabled = false
+
+		text = text or "New Toggle"
+		callback = callback or function() end
+
+		local Toggle = Instance.new("TextLabel")
+		local Background = Instance.new("TextButton")
+		local OnOffToggle = Instance.new("TextButton")
+
+		Toggle.Name = "Toggle"
+		Toggle.Parent = Container
+		Toggle.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		Toggle.BorderSizePixel = 0
+		Toggle.Size = UDim2.new(0, 200, 0, 50)
+		Toggle.Font = Enum.Font.Ubuntu
+		Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Toggle.TextSize = 14.000
+		Toggle.TextXAlignment = Enum.TextXAlignment.Left
+		Toggle.Text = text
+
+		Background.Name = "Background"
+		Background.Parent = Toggle
+		Background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+		Background.BorderSizePixel = 0
+		Background.Position = UDim2.new(0.713333309, 0, 0.275000006, 0)
+		Background.Size = UDim2.new(0, 36, 0, 18)
+		Background.Font = Enum.Font.SourceSans
+		Background.Text = ""
+		Background.TextColor3 = Color3.fromRGB(0, 0, 0)
+		Background.TextSize = 14.000
+
+		OnOffToggle.Name = "OnOffToggle"
+		OnOffToggle.Parent = Background
+		OnOffToggle.BackgroundColor3 = Color3.fromRGB(255, 0, 4)
+		OnOffToggle.BorderSizePixel = 0
+		OnOffToggle.Position = UDim2.new(0, 0, 0, 0)
+		OnOffToggle.Size = UDim2.new(0, 18, 0, 18)
+		OnOffToggle.Font = Enum.Font.SourceSans
+		OnOffToggle.Text = ""
+		OnOffToggle.TextColor3 = Color3.fromRGB(0,255,0)
+		OnOffToggle.TextSize = 14.000
+
+		local function Fire()
+			enabled = not enabled
+			OnOffToggle:TweenPosition(enabled and UDim2.new(0.5,0,0,0) or UDim2.new(0,0,0,0), "InOut", "Linear", 0.1) 
+			OnOffToggle.BackgroundColor3 = enabled and Color3.fromRGB(0,255,0) or Color3.new(255,0,0)
+			pcall(callback, enabled)
+		end
+
+		OnOffToggle.MouseButton1Click:Connect(Fire)
+		Background.MouseButton1Click:Connect(Fire)
+
+		function actions:Set(arg)
+			OnOffToggle:TweenPosition(enabled and UDim2.new(0.5,0,0,0) or UDim2.new(0,0,0,0), "InOut", "Linear", 0.1) 
+			OnOffToggle.BackgroundColor3 = enabled and Color3.fromRGB(0,255,0) or Color3.new(255,0,0)
+			pcall(callback, arg)
+		end
+		
+	    function rainbow()
+            while Title do
+	            wait()
+	            Title.TextColor3 = Color3.fromHSV(tick()%5/5,1,1)
+	            for i,v in pairs(Container:GetChildren()) do
+	                if v.ClassName == "TextButton" or v.ClassName == "TextLabel" then
+	                    v.TextColor3 = Color3.fromHSV(tick()%5/5,1,1)
+	                end
+	            end
+	        end 
+	    end 
+
+	end
+	return EpicLibrary
+end
+
+
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Zaps™: UI Library", Text = "Press 'Delete' to purge UI ©Zaps", Icon = "", Duration = 3})
